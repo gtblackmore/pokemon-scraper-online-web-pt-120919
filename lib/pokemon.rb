@@ -9,13 +9,13 @@ class Pokemon
     
   end
 
-  def self.save(name, type, id)
+  def self.save(name, type, db)
     db.execute("INSERT INTO pokemon (name, type) VALUES (?, ?)", name, type)
-    @id = db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
+    @id = @db.execute("SELECT last_insert_rowid() FROM pokemon")[0][0]
   end
 
   def self.find(id, db)
-    caught_pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?")
+    caught_pokemon = @db.execute("SELECT * FROM pokemon WHERE id = ?")
     Pokemon.new(id: caught_pokemon[0], name: caught_pokemon[1], type: caught_pokemon[2])
   end
 
